@@ -1,5 +1,14 @@
-const Blockchain = require('./model/Blockchain');
+const Koa = require('koa');
+const app = new Koa();
+const Routers = require('./routers');
+const BodyParser = require('koa-bodyparser');
+const PORT = process.env.PORT || 5000;
 
-const blockchain = new Blockchain();
+app.use(BodyParser())
+app.use(Routers.routes());
 
-console.log(blockchain.lastBlock);
+const server = app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
+});
+
+module.exports = server;
